@@ -26,3 +26,14 @@ print(dataset.head(20))
 print(dataset.describe())
 # class distribution
 print(dataset.groupby('class').size())
+
+
+# Data visualization
+dataset.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
+plt.show()
+# histograms
+dataset.hist()
+plt.show()
+# scatter plot matrix
+scatter_matrix(dataset)
+plt.show()
