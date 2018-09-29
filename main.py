@@ -17,7 +17,6 @@ url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv"
 names = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
 dataset = pandas.read_csv(url, names=names)
 
-
 # Check how many instances (rows) and attributes (columns) the data contains with the shape property.
 print(dataset.shape)
 # Get first 20 rows of data.
@@ -26,7 +25,6 @@ print(dataset.head(20))
 print(dataset.describe())
 # class distribution
 print(dataset.groupby('class').size())
-
 
 # Data visualization
 dataset.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
@@ -37,7 +35,6 @@ plt.show()
 # scatter plot matrix
 scatter_matrix(dataset)
 plt.show()
-
 
 # Create validation date set.
 # Split data set into two, 80% to train models and 20% as a validation data set.
@@ -54,7 +51,9 @@ Y = array[:,4]
 validation_size = 0.20
 seed = 7
 X_train, X_validation, Y_train, Y_validation = model_selection.train_test_split(X, Y, test_size=validation_size, random_state=seed)
-
+# Test options and evaluation metric
+seed = 7
+scoring = 'accuracy'
 
 # Build 6 different algorithms:
 # 1. Logistic Regression (LR)
@@ -88,3 +87,11 @@ ax = fig.add_subplot(111)
 plt.boxplot(results)
 ax.set_xticklabels(names)
 plt.show()
+
+# Use KNN to make predictions on validation data set.
+knn = KNeighborsClassifier()
+knn.fit(X_train, Y_train)
+predictions = knn.predict(X_validation)
+print(accuracy_score(Y_validation, predictions))
+print(confusion_matrix(Y_validation, predictions))
+print(classification_report(Y_validation, predictions))
